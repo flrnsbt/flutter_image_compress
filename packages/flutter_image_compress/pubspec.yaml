@@ -10,23 +10,27 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_image_compress_platform_interface:
   flutter_image_compress_common:
+    git:
+      url: https://github.com/flrnsbt/flutter_image_compress
+      path: packages/flutter_image_compress_common
   flutter_image_compress_web:
+    git:
+      url: https://github.com/flrnsbt/flutter_image_compress
+      path: packages/flutter_image_compress_web
   flutter_image_compress_macos:
+    git:
+      url: https://github.com/flrnsbt/flutter_image_compress
+      path: packages/flutter_image_compress_macos
   flutter_image_compress_ohos:
+    git:
+      url: https://github.com/flrnsbt/flutter_image_compress
+      path: packages/flutter_image_compress_ohos
+  flutter_image_compress_platform_interface:
+    git:
+      url: https://github.com/flrnsbt/flutter_image_compress
+      path: packages/flutter_image_compress_platform_interface
 
-dependency_overrides:
-  flutter_image_compress_common:
-    path: ../flutter_image_compress_common
-  flutter_image_compress_web:
-    path: ../flutter_image_compress_web
-  flutter_image_compress_macos:
-    path: ../flutter_image_compress_macos
-  flutter_image_compress_ohos:
-    path: ../flutter_image_compress_ohos
-  flutter_image_compress_platform_interface:
-    path: ../flutter_image_compress_platform_interface
 
 flutter:
   plugin:
