@@ -37,8 +37,7 @@ Future<Uint8List> resizeWithList({
   if (fcn.typeofEquals('pica')) {
     pica = fcn as Pica;
   } else {
-    throw Exception(
-        'Pica could not be initialized, are you sure you have included the pica library?');
+    throw Exception('pica is not found in window object, ${fcn.runtimeType}');
   }
 
   logger.jsLog('The pica instance', pica);
