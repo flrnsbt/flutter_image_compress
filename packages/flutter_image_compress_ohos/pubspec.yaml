@@ -3,10 +3,10 @@ description: OpenHarmony implementation of the flutter_image_compress plugin.
 version: 0.0.2
 repository: https://github.com/fluttercandies/flutter_image_compress
 topics:
-  - image-compress
-  - ohos
-  - harmony
-  - openharmony
+- image-compress
+- ohos
+- harmony
+- openharmony
 
 environment:
   sdk: '>=2.12.0 <4.0.0'
@@ -15,7 +15,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_image_compress_platform_interface: ^1.0.5
+  flutter_image_compress_platform_interface:
+
+dependency_overrides:
+  flutter_image_compress_platform_interface:
+    path: ../flutter_image_compress_platform_interface
 
 dev_dependencies:
   flutter_test:
@@ -40,7 +44,7 @@ flutter:
   plugin:
     implements: flutter_image_compress
     platforms:
-      ohos:  
+      ohos:
         package: com.fluttercandies.flutter_image_compress
         pluginClass: FlutterImageCompressOhosPlugin
         dartPluginClass: FlutterImageCompressOhos

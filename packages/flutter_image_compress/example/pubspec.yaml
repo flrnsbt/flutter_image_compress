@@ -12,16 +12,15 @@ dependencies:
     sdk: flutter
 
   flutter_image_compress:
-    path: ../
   path_provider: ^2.0.0
   path_provider_ohos:
     git:
       url: https://gitee.com/openharmony-sig/flutter_packages.git
       path: packages/path_provider/path_provider_ohos
 
-# dependency_overrides:
-#   flutter_image_compress_web:
-#     path: ../../flutter_image_compress_web
+dependency_overrides:
+  flutter_image_compress:
+    path: ../
 
 flutter:
   uses-material-design: true

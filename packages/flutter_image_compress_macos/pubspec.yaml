@@ -10,8 +10,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_image_compress_platform_interface: ^1.0.5
-  
+  flutter_image_compress_platform_interface:
+
+dependency_overrides:
+  flutter_image_compress_platform_interface:
+    path: ../flutter_image_compress_platform_interface
+
 flutter:
   plugin:
     implements: flutter_image_compress
