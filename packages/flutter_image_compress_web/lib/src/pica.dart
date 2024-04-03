@@ -2,6 +2,7 @@
 library pica;
 
 import 'dart:convert';
+import 'dart:js_interop_unsafe';
 import 'package:web/web.dart';
 import 'dart:typed_data';
 
@@ -32,13 +33,7 @@ Future<Uint8List> resizeWithList({
   int quality = 88,
 }) async {
   final Stopwatch stopwatch = Stopwatch()..start();
-  final fcn = jsWindow.pica.callAsFunction();
-  Pica? pica;
-  if (fcn.typeofEquals('pica')) {
-    pica = fcn as Pica;
-  } else {
-    throw Exception('pica is not found in window object, ${fcn.runtimeType}');
-  }
+  final pica = jsWindow.pica.callAsConstructor<Pica>();
 
   logger.jsLog('The pica instance', pica);
   logger.jsLog('src image buffer', buffer);
