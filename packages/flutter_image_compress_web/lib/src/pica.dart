@@ -35,7 +35,15 @@ Future<Uint8List> resizeWithList({
   int quality = 88,
 }) async {
   final Stopwatch stopwatch = Stopwatch()..start();
-  final pica = jsWindow.pica.callAsFunction() as Pica;
+  final fcn = jsWindow.pica.callAsFunction();
+  Pica? pica;
+  if (fcn.typeofEquals('pica')) {
+    pica = fcn as Pica;
+  } else {
+    throw Exception(
+        'Pica could not be initialized, are you sure you have included the pica library?');
+  }
+
   logger.jsLog('The pica instance', pica);
   logger.jsLog('src image buffer', buffer);
   logger.dartLog('src image buffer length: ${buffer.length}');
