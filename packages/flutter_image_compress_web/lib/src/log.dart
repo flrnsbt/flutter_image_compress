@@ -1,15 +1,15 @@
 @JS('console')
 library log;
 
-import 'package:js/js.dart';
+import 'dart:js_interop';
 
-external void log(dynamic tag, dynamic msg);
+import 'package:web/web.dart';
 
 bool showLog = false;
 
 void jsLog(dynamic tag, dynamic msg) {
   if (showLog) {
-    log(tag, msg);
+    console.log('[$tag] $msg'.toJS);
   }
 }
 

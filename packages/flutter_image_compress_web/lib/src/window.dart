@@ -1,31 +1,29 @@
 @JS()
 library window;
 
-import 'dart:html';
+import 'package:web/web.dart';
 import 'dart:typed_data';
 
-import 'package:js/js.dart';
-import 'package:js/js_util.dart';
+import 'dart:js_interop';
 
 @JS()
 @staticInterop
 class JSWindow {}
 
 extension JSWindowExtension on JSWindow {
-  external Function get createImageBitmap;
-  external Function get pica;
+  external JSFunction get createImageBitmap;
+  external JSFunction get pica;
 }
 
 Future<ImageBitmap> convertUint8ListToBitmap(Uint8List buffer) async {
-  final blob = Blob([buffer]);
+  final jsBuffer = buffer.toJS;
+  final blobParts = [jsBuffer].toJS;
+  final blob = Blob(blobParts);
+  final JSPromise result =
+      jsWindow.createImageBitmap.callAsFunction(null, blob) as JSPromise;
+  final imageBitmap = await result.toDart;
 
-  final result = await jsWindow.createImageBitmap(blob);
-  final bitmap = await promiseToFuture(result);
-  return bitmap;
+  return imageBitmap as ImageBitmap;
 }
 
 JSWindow get jsWindow => window as JSWindow;
-
-extension FutureDynamicExtension on dynamic {
-  Future<T> toFuture<T>() => promiseToFuture(this);
-}

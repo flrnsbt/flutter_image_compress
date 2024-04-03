@@ -2,33 +2,29 @@
 library pica;
 
 import 'dart:convert';
-import 'dart:html';
+import 'package:web/web.dart';
 import 'dart:typed_data';
 
 import 'package:flutter_image_compress_platform_interface/flutter_image_compress_platform_interface.dart';
-import 'package:js/js.dart';
-import 'package:js/js_util.dart';
+import 'dart:js_interop';
 
 import 'window.dart';
 import 'log.dart' as logger;
 
 @JS('pica.resize')
-external dynamic resize(
-  ImageBitmap imageBitmap,
-  CanvasElement canvas,
-);
+external JSPromise resize(ImageBitmap imageBitmap, HTMLCanvasElement canvas);
 
 @JS()
 @staticInterop
 class Pica {}
 
 extension PicaExt on Pica {
-  external dynamic resize(
+  external JSPromise resize(
     ImageBitmap imageBitmap,
-    CanvasElement canvas,
+    HTMLCanvasElement canvas,
   );
 
-  external dynamic init();
+  external JSAny? init();
 }
 
 Future<Uint8List> resizeWithList({
@@ -39,14 +35,14 @@ Future<Uint8List> resizeWithList({
   int quality = 88,
 }) async {
   final Stopwatch stopwatch = Stopwatch()..start();
-  final pica = jsWindow.pica() as Pica;
+  final pica = jsWindow.pica.callAsFunction() as Pica;
   logger.jsLog('The pica instance', pica);
   logger.jsLog('src image buffer', buffer);
   logger.dartLog('src image buffer length: ${buffer.length}');
   final bitmap = await convertUint8ListToBitmap(buffer);
 
-  final srcWidth = bitmap.width!;
-  final srcHeight = bitmap.height!;
+  final srcWidth = bitmap.width;
+  final srcHeight = bitmap.height;
 
   final ratio = srcWidth / srcHeight;
 
@@ -55,8 +51,10 @@ Future<Uint8List> resizeWithList({
 
   logger.jsLog('target size', '$width x $height');
 
-  final canvas = CanvasElement(width: width, height: height);
-  await promiseToFuture(pica.resize(bitmap, canvas));
+  final canvas = HTMLCanvasElement()
+    ..width = width
+    ..height = height;
+  await pica.resize(bitmap, canvas).toDart;
   final blob = canvas.toDataUrl(format.type, quality / 100);
   final str = blob.split(',')[1];
 
