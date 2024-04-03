@@ -19,8 +19,8 @@ Future<ImageBitmap> convertUint8ListToBitmap(Uint8List buffer) async {
   final jsBuffer = buffer.toJS;
   final blobParts = [jsBuffer].toJS;
   final blob = Blob(blobParts);
-  final JSPromise result =
-      jsWindow.createImageBitmap.callAsFunction(null, blob) as JSPromise;
+  final JSPromise result = jsWindow.createImageBitmap
+      .callAsFunction(null, blob.jsify()) as JSPromise;
   final imageBitmap = await result.toDart;
 
   return imageBitmap as ImageBitmap;
