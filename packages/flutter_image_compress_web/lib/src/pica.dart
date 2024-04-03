@@ -14,15 +14,12 @@ import 'log.dart' as logger;
 @JS('pica.resize')
 external JSPromise resize(ImageBitmap imageBitmap, HTMLCanvasElement canvas);
 
-@JS()
+@JS('pica')
 @staticInterop
 class Pica {}
 
 extension PicaExt on Pica {
-  external JSPromise resize(
-    ImageBitmap imageBitmap,
-    HTMLCanvasElement canvas,
-  );
+  external JSPromise resize(ImageBitmap imageBitmap, HTMLCanvasElement canvas);
 
   external JSAny? init();
 }
