@@ -30,7 +30,10 @@ const String _kPicaCDN =
     'https://cdn.jsdelivr.net/npm/pica@9.0.1/dist/pica.min.js';
 
 Future<Pica> _lazyLoadPica() async {
-  if (jsWindow.pica.isUndefinedOrNull) {
+
+  // check if context contains pica
+  final hasPica = globalContext.has('pica');
+  if (!hasPica) {
     final script = HTMLScriptElement()
       ..src = _kPicaCDN
       ..type = 'text/javascript';
