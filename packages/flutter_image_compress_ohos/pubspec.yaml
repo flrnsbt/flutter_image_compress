@@ -19,6 +19,7 @@ dependencies:
     git:
       url: https://github.com/flrnsbt/flutter_image_compress
       path: packages/flutter_image_compress_platform_interface
+      ref: web-lazy-pica-load
 
 dev_dependencies:
   flutter_test:

@@ -25,6 +25,21 @@ extension PicaExt on Pica {
   external JSAny? init();
 }
 
+
+const String _kPicaCDN =
+    'https://cdn.jsdelivr.net/npm/pica@9.0.1/dist/pica.min.js';
+
+Future<Pica> _lazyLoadPica() async {
+  if (jsWindow.pica.isUndefinedOrNull) {
+    final script = HTMLScriptElement()
+      ..src = _kPicaCDN
+      ..type = 'text/javascript';
+    document.head!.append(script);
+    await script.onLoad.first;
+  }
+  return jsWindow.pica.callAsConstructor<Pica>();
+}
+
 Future<Uint8List> resizeWithList({
   required Uint8List buffer,
   required int minWidth,
@@ -33,7 +48,7 @@ Future<Uint8List> resizeWithList({
   int quality = 88,
 }) async {
   final Stopwatch stopwatch = Stopwatch()..start();
-  final pica = jsWindow.pica.callAsConstructor<Pica>();
+  final pica = await _lazyLoadPica();
 
   logger.jsLog('The pica instance', pica);
   logger.jsLog('src image buffer', buffer);
