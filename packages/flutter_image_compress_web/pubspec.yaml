@@ -18,7 +18,7 @@ dependencies:
       # ref: web-lazy-pica-load
   flutter_web_plugins:
     sdk: flutter
-  web: ^0.5.1
+  web: ^1.0.0
 
 
 dev_dependencies:
